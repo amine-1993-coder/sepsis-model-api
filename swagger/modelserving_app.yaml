@@ -1,0 +1,41 @@
+swagger: "2.0"
+
+info:
+  title: "Test Model Serving Microservice API"
+  version: "1.0"
+
+basePath: /test/v1.0
+
+paths:
+  /prediction/:
+    post:
+      operationId: api.prediction.class_instance.post
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              fv:
+                type: string
+      responses:
+        '200':
+          description: 'Get predictions for supplied feature vector'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Prediction'
+
+    get:
+      operationId: api.prediction.class_instance.get
+      responses:
+        '200':
+          description: 'OK'
+
+definitions:
+  Prediction:
+    type: object
+    properties:
+      prediction:
+        type: string

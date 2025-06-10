@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ml-model-service
+    env: docker
+    plan: free
+    autoDeploy: true
+    region: oregon
+    dockerContext: .
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: PORT
+        value: 9090
+

@@ -1,0 +1,10 @@
+flask
+Flask==2.0.3
+connexion[swagger-ui]==2.14.2
+numpy
+pandas
+scikit-learn
+joblib
+connexion
+
+
