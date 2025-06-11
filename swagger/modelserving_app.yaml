@@ -1,15 +1,25 @@
 swagger: "2.0"
 
 info:
-  title: "Test Model Serving Microservice API"
-  version: "1.0"
+  title: "Sepsis Prediction API"
+  version: "1.0.0"
 
 basePath: /test/v1.0
+
+schemes:
+  - http
+
+consumes:
+  - application/json
+produces:
+  - application/json
 
 paths:
   /prediction/:
     post:
+      summary: Predict sepsis
       operationId: api.prediction.class_instance.post
+      description: Send patient feature data and receive a sepsis risk prediction
       parameters:
         - in: body
           name: body
@@ -17,25 +27,28 @@ paths:
           schema:
             type: object
             properties:
-              fv:
-                type: string
+              sepsis_fv:
+                type: array
+                items:
+                  type: object
+                  additionalProperties:
+                    type: number
       responses:
         '200':
-          description: 'Get predictions for supplied feature vector'
+          description: Prediction result
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Prediction'
+            type: object
+            properties:
+              sepsis_risk:
+                type: array
+                items:
+                  type: number
+        '500':
+          description: Internal error
 
     get:
+      summary: Health check
       operationId: api.prediction.class_instance.get
       responses:
         '200':
-          description: 'OK'
-
-definitions:
-  Prediction:
-    type: object
-    properties:
-      prediction:
-        type: string
+          description: Health status
