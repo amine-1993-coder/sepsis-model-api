@@ -1,7 +1,7 @@
 swagger: "2.0"
 
 info:
-  title: "Test Model Serving Microservice API"
+  title: "Sepsis Prediction API"
   version: "1.0"
 
 basePath: /test/v1.0
@@ -9,7 +9,7 @@ basePath: /test/v1.0
 paths:
   /prediction/:
     post:
-      operationId: api.prediction.class_instance.post
+      operationId: api.sepsis_predict_rf.predict  # ← This points to api/sepsis_predict_rf.py → def predict(body)
       parameters:
         - in: body
           name: body
@@ -21,17 +21,9 @@ paths:
                 type: string
       responses:
         '200':
-          description: 'Get predictions for supplied feature vector'
+          description: 'Returns sepsis prediction result'
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Prediction'
-
-    get:
-      operationId: api.prediction.class_instance.get
-      responses:
-        '200':
-          description: 'OK'
+            $ref: '#/definitions/Prediction'
 
 definitions:
   Prediction:
