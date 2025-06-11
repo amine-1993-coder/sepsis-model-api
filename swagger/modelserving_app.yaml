@@ -2,30 +2,109 @@ swagger: "2.0"
 
 info:
   title: "Sepsis Prediction API"
-  version: "1.0"
+  description: "A microservice that predicts the onset of sepsis based on patient data."
+  version: "1.0.0"
 
 basePath: /test/v1.0
+
+schemes:
+  - http
+
+consumes:
+  - application/json
+produces:
+  - application/json
 
 paths:
   /prediction/:
     post:
-      operationId: api.sepsis_predict_rf.predict  # ← This points to api/sepsis_predict_rf.py → def predict(body)
+      summary: Predict sepsis from patient data
+      operationId: api.sepsis_predict_rf.predict
+      description: Returns a sepsis prediction for one or more patient feature vectors.
       parameters:
         - in: body
           name: body
           required: true
           schema:
-            type: object
-            properties:
-              fv:
-                type: string
+            type: array
+            items:
+              $ref: '#/definitions/FeatureVector'
       responses:
         '200':
-          description: 'Returns sepsis prediction result'
+          description: A list of sepsis prediction results
           schema:
-            $ref: '#/definitions/Prediction'
+            type: array
+            items:
+              $ref: '#/definitions/Prediction'
+        '400':
+          description: Invalid input data
 
 definitions:
+  FeatureVector:
+    type: object
+    properties:
+      Age:
+        type: number
+      Gender:
+        type: number
+      HeartRate:
+        type: number
+      Temp:
+        type: number
+      SystolicBP:
+        type: number
+      MeanBP:
+        type: number
+      DiastolicBP:
+        type: number
+      RespRate:
+        type: number
+      OximetrySat:
+        type: number
+      Potassium:
+        type: number
+      Chloride:
+        type: number
+      Calcium:
+        type: number
+      Hemoglobin:
+        type: number
+      pH:
+        type: number
+      BaseExcess:
+        type: number
+      Bicarbonate:
+        type: number
+      FiO2:
+        type: number
+      Glucose:
+        type: number
+      BUN:
+        type: number
+      Creatinine:
+        type: number
+      Magnesium:
+        type: number
+      SGOT:
+        type: number
+      SGPT:
+        type: number
+      TotalBili:
+        type: number
+      WBC:
+        type: number
+      Platelets:
+        type: number
+      PaCO2:
+        type: number
+      Lactate:
+        type: number
+    required:
+      - Age
+      - Gender
+      - HeartRate
+      - Temp
+
   Prediction:
     type: object
     properties:
